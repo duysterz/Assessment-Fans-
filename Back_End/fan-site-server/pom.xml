@@ -39,6 +39,26 @@
             <version>8.0.33</version>
         </dependency>
 
+        <!-- AWS -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.18.24</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>iam</artifactId>
+            <version>2.18.24</version>
+        </dependency>
+
+        <!-- Image Scaling -->
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
+
+
         <!-- Development tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
