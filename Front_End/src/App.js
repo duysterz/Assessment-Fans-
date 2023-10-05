@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './components/Home';  
 import About from './components/About'; 
 import Contact from './components/Contact';
+import Upload from './components/Upload';
 // import ImageGallery from './components/ImageGallery'; 
 // import FilterButtons from './components/FilterButtons'; 
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/upload" element={<Upload />} />
           </Routes>
           {/* <FilterButtons /> 
           <Routes>
