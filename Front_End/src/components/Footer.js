@@ -5,7 +5,7 @@ import '../App.css';
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>Copyright &copy; 2023 Interior Design Fansite</p>
+      <p>Copyright &copy; SofaSoGood Designs</p>
     </footer>
   );
 };
