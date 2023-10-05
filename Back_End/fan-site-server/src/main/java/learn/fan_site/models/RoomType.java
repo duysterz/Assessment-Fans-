@@ -21,9 +21,7 @@ public class RoomType {
         return typeName;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
+    public void setTypeName(String typeName) { this.typeName = typeName; }
 
     // Override equals and hashCode
 }
