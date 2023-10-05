@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import RoomType from './components/RoomType';
+import RoomStyle from './components/RoomStyle';
+import Rooms from './components/Rooms';
 
-function App() {
+
+const App = () => {
+  const [roomTypes, setRoomTypes] = useState([]);
+  const [roomStyles, setRoomStyles] = useState([]);
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    // Fetch Room Types
+    fetch('/room-types')
+      .then((res) => res.json())
+      .then((data) => setRoomTypes(data));
+
+    // Fetch Room Styles
+    fetch('/room-styles')
+      .then((res) => res.json())
+      .then((data) => setRoomStyles(data));
+
+    // Fetch Rooms
+    fetch('/rooms')
+      .then((res) => res.json())
+      .then((data) => setRooms(data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Interior Design Fan Page</h1>
+      <RoomType roomTypes={roomTypes} />
+      <RoomStyle roomStyles={roomStyles} />
+      <Rooms rooms={rooms} roomTypes={roomTypes} roomStyles={roomStyles} />
     </div>
   );
-}
+};
 
 export default App;
+
+
+
+
