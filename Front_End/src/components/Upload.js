@@ -1,47 +1,38 @@
 import React, { useState } from 'react';
+import '../App.css';
 
 const Upload = () => {
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState('');
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
   };
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
 
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('description', description);
-
-    const requestOptions = {
-      method: 'POST',
-      body: formData
-    };
-
-    try {
-      const response = await fetch('http://localhost:8080/api/upload', requestOptions);
-      if (response.ok) {
-        console.log('File and description submitted');
-      } else {
-        console.log('Upload failed');
-      }
-    } catch (error) {
-      console.log('An error occurred:', error);
-    }
+  const handleSubmit = () => {
+    console.log('File and description submitted:', file, description);
   };
 
   return (
     <div className="upload">
-      <input type="file" onChange={handleFileChange} />
+      <label className="custom-file-upload">
+        Upload Your Image Here (File Types: JPG, PNG, JPEG)
+      </label>
+      <div className="file-row">
+        <input id="file-upload" type="file" accept=".jpg,.jpeg,.png" onChange={handleFileChange} />
+      </div>
       {file && (
-        <>
+        <div>
           <textarea placeholder="Enter description" onChange={handleDescriptionChange}></textarea>
           <button onClick={handleSubmit}>Upload</button>
-        </>
+        </div>
       )}
     </div>
   );
