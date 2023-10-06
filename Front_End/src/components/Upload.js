@@ -17,7 +17,21 @@ const Upload = () => {
   };
 
   const handleSubmit = () => {
-    console.log('File and description submitted:', file, description);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("description", description);
+
+    fetch("http://localhost:8080/api/room", {  
+      method: "POST",
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("File and description uploaded successfully:", data);
+    })
+    .catch((error) => {
+      console.error("Error uploading file and description:", error);
+    });
   };
 
   return (

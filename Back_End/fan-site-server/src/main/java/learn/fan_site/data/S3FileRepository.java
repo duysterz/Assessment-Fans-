@@ -41,13 +41,22 @@ public class S3FileRepository implements FileRepository {
     }
 
     @Override
-    public String upload(MultipartFile file) throws FileUploadException {
+    public String upload(MultipartFile file, String description) throws FileUploadException {
         try {
             return upload(ImageIO.read(file.getInputStream()), file.getOriginalFilename(), file.getContentType());
         } catch (IOException | S3Exception ex) {
             throw new FileUploadException(ex.getMessage(), ex);
         }
     }
+
+//    @Override
+//    public String upload(MultipartFile file) throws FileUploadException {
+//        try {
+//            return upload(ImageIO.read(file.getInputStream()), file.getOriginalFilename(), file.getContentType());
+//        } catch (IOException | S3Exception ex) {
+//            throw new FileUploadException(ex.getMessage(), ex);
+//        }
+//    }
 
     private String upload(BufferedImage image, String filename, String contentType) throws FileUploadException {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);

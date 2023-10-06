@@ -14,10 +14,10 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    public Result<String> uploadFile(MultipartFile file) {
+    public Result<String> uploadFile(MultipartFile file, String description) {
         Result<String> result = new Result<>();
         try {
-            result.setPayload(fileRepository.upload(file));
+            result.setPayload(fileRepository.upload(file, description));
         } catch (FileUploadException ex) {
             ex.printStackTrace();
             result.addMessage("File not uploaded.", ResultType.INVALID);
@@ -25,3 +25,13 @@ public class FileService {
         return result;
     }
 }
+
+
+            //            result.setPayload(fileRepository.upload(file));
+//        } catch (FileUploadException ex) {
+//            ex.printStackTrace();
+//            result.addMessage("File not uploaded.", ResultType.INVALID);
+//        }
+//        return result;
+//    }
+//}

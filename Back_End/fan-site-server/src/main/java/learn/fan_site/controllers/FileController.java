@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import learn.fan_site.domain.FileService;
 
 @RestController
 @RequestMapping("/api/file")
@@ -21,14 +22,25 @@ public class FileController {
         this.service = service;
     }
 
+
     @PostMapping
-    public ResponseEntity<Object> upload(@RequestParam("file") MultipartFile file) {
-        Result<String> result = service.uploadFile(file);
+    public ResponseEntity<Object> upload(@RequestParam("file") MultipartFile file, @RequestParam("description") String description) {
+        Result<String> result = service.uploadFile(file, description);
         if (result.isSuccess()) {
             return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
         }
         return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
     }
 }
+
+//    @PostMapping
+//    public ResponseEntity<Object> upload(@RequestParam("file") MultipartFile file) {
+//        Result<String> result = service.uploadFile(file);
+//        if (result.isSuccess()) {
+//            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+//        }
+//        return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+//    }
+//}
 
 
