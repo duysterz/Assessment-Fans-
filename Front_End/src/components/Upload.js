@@ -1,41 +1,50 @@
 import React, { useState } from 'react';
-import '../App.css';
-import axios from 'axios';
 
-// const Upload = () => {
-//   const [file, setFile] = useState(null);
-  
-//   const handleFileChange = async (e) => {
-//     const selectedFile = e.target.files[0];
-//     if (selectedFile) {
-//       const description = window.prompt("Enter a description for this image:", "Description here...");
-//       if (description !== null) { 
-//         const formData = new FormData();
-//         formData.append('file', selectedFile);
-//         formData.append('description', description);
+const Upload = () => {
+  const [file, setFile] = useState(null);
+  const [description, setDescription] = useState('');
 
-//         try {
-//           const response = await axios.post('http://localhost:8080/upload', formData, {
-//             headers: { 'Content-Type': 'multipart/form-data' },
-//           });
-//           console.log('Upload successful:', response.data);
-//         } catch (error) {
-//           console.error('Upload failed:', error);
-//         }
-//       }
-//     }
-//   };
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-//   return (
-//     <div className="upload">
-//       <label htmlFor="file-upload" className="custom-file-upload">
-//         Upload Image Here (JPG, PNG, JPEG)
-//       </label>
-//       <div className="file-row">
-//         <input id="file-upload" type="file" accept=".jpg,.jpeg,.png" onChange={handleFileChange} />
-//       </div>
-//     </div>
-//   );
-// };
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
 
-// export default Upload;
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('description', description);
+
+    const requestOptions = {
+      method: 'POST',
+      body: formData
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/api/upload', requestOptions);
+      if (response.ok) {
+        console.log('File and description submitted');
+      } else {
+        console.log('Upload failed');
+      }
+    } catch (error) {
+      console.log('An error occurred:', error);
+    }
+  };
+
+  return (
+    <div className="upload">
+      <input type="file" onChange={handleFileChange} />
+      {file && (
+        <>
+          <textarea placeholder="Enter description" onChange={handleDescriptionChange}></textarea>
+          <button onClick={handleSubmit}>Upload</button>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Upload;
