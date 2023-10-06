@@ -1,7 +1,9 @@
 package learn.fan_site;
 
+import org.springframework.boot.SpringApplication;
+
 public class App {
     public static void main(String[] args) {
-        // PLACEHOLDER
+        SpringApplication.run(App.class, args);
     }
 }
