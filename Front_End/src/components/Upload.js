@@ -21,7 +21,7 @@ const Upload = () => {
     formData.append("file", file);
     formData.append("description", description);
 
-    fetch("http://localhost:8080/api/room", {  
+    fetch("http://localhost:8080/api/file", {  
       method: "POST",
       body: formData,
     })
