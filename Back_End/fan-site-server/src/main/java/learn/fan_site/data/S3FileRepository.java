@@ -57,16 +57,6 @@ public class S3FileRepository implements FileRepository {
 
         AwsCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
 
-
-//        // Create credentials provider
-//        AwsCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(awsCredentials);
-//
-//        // Use it to build client
-//        S3Client s3Client = S3Client.builder()
-//                .region(Region.US_EAST_1)
-//                .credentialsProvider(credentialsProvider)
-//                .build();
-
         this.awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
         this.credentialsProvider = StaticCredentialsProvider.create(awsCredentials);
 
@@ -92,14 +82,6 @@ public class S3FileRepository implements FileRepository {
         }
     }
 
-//    @Override
-//    public String upload(MultipartFile file) throws FileUploadException {
-//        try {
-//            return upload(ImageIO.read(file.getInputStream()), file.getOriginalFilename(), file.getContentType());
-//        } catch (IOException | S3Exception ex) {
-//            throw new FileUploadException(ex.getMessage(), ex);
-//        }
-//    }
 
     @Override
     public List<ImageData> fetchAllImages() {
@@ -134,14 +116,13 @@ public class S3FileRepository implements FileRepository {
 
 
 
-
-
     // Placeholder method, replace with real database fetch logic
     private String fetchDescriptionFromDatabase(String filename) {
         // Fetch description based on filename or some identifier
         return "Description for " + filename;
     }
 
+    
 
     private String upload(BufferedImage image, String filename, String contentType) throws FileUploadException {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
