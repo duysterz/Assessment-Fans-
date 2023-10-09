@@ -4,12 +4,15 @@ import learn.fan_site.exceptions.FileUploadException;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
 import javax.imageio.ImageIO;
@@ -36,6 +39,11 @@ public class S3FileRepository implements FileRepository {
     private final String secretAccessKey;
     private final String bucketName;
     private final Region bucketRegion;
+    private final AwsBasicCredentials awsCredentials;
+    private final AwsCredentialsProvider credentialsProvider;
+    private final S3Client s3Client;
+
+
 
     public S3FileRepository(
             @Value("${aws.access.key.id}") String accessKeyId,
@@ -46,6 +54,33 @@ public class S3FileRepository implements FileRepository {
         this.secretAccessKey = secretAccessKey;
         this.bucketName = bucketName;
         this.bucketRegion = Region.of(bucketRegion);
+
+        AwsCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
+
+
+//        // Create credentials provider
+//        AwsCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(awsCredentials);
+//
+//        // Use it to build client
+//        S3Client s3Client = S3Client.builder()
+//                .region(Region.US_EAST_1)
+//                .credentialsProvider(credentialsProvider)
+//                .build();
+
+        this.awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
+        this.credentialsProvider = StaticCredentialsProvider.create(awsCredentials);
+
+        this.s3Client = S3Client.builder()
+                .region(this.bucketRegion)
+                .credentialsProvider(this.credentialsProvider)
+                .build();
+    }
+
+    private S3Client buildS3Client() {
+        return S3Client.builder()
+                .region(this.bucketRegion)
+                .credentialsProvider(this.credentialsProvider)
+                .build();
     }
 
     @Override
@@ -96,11 +131,9 @@ public class S3FileRepository implements FileRepository {
         return imageList;
     }
 
-    //need to fix this part still
-    AmazonS3 s3 = AmazonS3ClientBuilder.standard()
-            .withCredentials(new StaticCredentialsProvider(awsCredentials))
-            .withRegion(Regions.US_EAST_1)
-            .build();
+
+
+
 
 
     // Placeholder method, replace with real database fetch logic
