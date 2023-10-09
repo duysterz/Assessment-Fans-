@@ -29,6 +29,7 @@ const Home = () => {
       <div className="image-gallery">
         {Array.isArray(images) && images.map((image) => (  
           <div key={image.id} className="image-item">
+            {console.log("Image URL:", image.url)}
             <img src={image.url} alt={image.description} />
             <p>{image.description}</p>
           </div>
