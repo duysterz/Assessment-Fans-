@@ -96,6 +96,13 @@ public class S3FileRepository implements FileRepository {
         return imageList;
     }
 
+    //need to fix this part still
+    AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+            .withCredentials(new StaticCredentialsProvider(awsCredentials))
+            .withRegion(Regions.US_EAST_1)
+            .build();
+
+
     // Placeholder method, replace with real database fetch logic
     private String fetchDescriptionFromDatabase(String filename) {
         // Fetch description based on filename or some identifier

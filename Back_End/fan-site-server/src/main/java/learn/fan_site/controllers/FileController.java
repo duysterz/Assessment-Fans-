@@ -1,8 +1,10 @@
 package learn.fan_site.controllers;
 
+import learn.fan_site.data.S3FileRepository;
 import learn.fan_site.domain.FileService;
 import learn.fan_site.domain.Result;
 import learn.fan_site.models.ImageData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,4 +50,20 @@ public class FileController {
         List<ImageData> images = service.fetchAllImages();
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
+
+// ^ if we use that, uncomment the code below, but might be easier to use the code below
+    @RestController
+    @RequestMapping("/api/images")
+    public class ImageController {
+
+        @Autowired
+        private S3FileRepository s3Repository;
+
+        @GetMapping
+        public List<ImageData> getImages() {
+            return s3Repository.fetchAllImages();
+        }
+
+    }
+
 }
