@@ -10,14 +10,22 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectResponse;
-import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.model.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import learn.fan_site.models.ImageData;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
+import software.amazon.awssdk.services.s3.model.S3Object;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class S3FileRepository implements FileRepository {
@@ -57,6 +65,43 @@ public class S3FileRepository implements FileRepository {
 //            throw new FileUploadException(ex.getMessage(), ex);
 //        }
 //    }
+
+    @Override
+    public List<ImageData> fetchAllImages() {
+        List<ImageData> imageList = new ArrayList<>();
+
+        try (S3Client s3 = buildS3Client()) {
+            ListObjectsV2Request listReq = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .build();
+
+            ListObjectsV2Response listRes = s3.listObjectsV2(listReq);
+
+            for (S3Object s3Object : listRes.contents()) {
+                String filename = s3Object.key();
+                URL url = s3.utilities().getUrl(builder -> builder.bucket(bucketName).key(filename));
+
+
+                // logic to get URL from S3 upload
+//                String description = fetchDescriptionFromDatabase(filename);
+
+                ImageData imageData = new ImageData();
+                imageData.setId(filename);  // ID can be filename or some unique identifier
+                imageData.setUrl(url.toString());
+                imageData.setDescription(description);
+
+                imageList.add(imageData);
+            }
+        }
+        return imageList;
+    }
+
+    // Placeholder method, replace with real database fetch logic
+    private String fetchDescriptionFromDatabase(String filename) {
+        // Fetch description based on filename or some identifier
+        return "Description for " + filename;
+    }
+
 
     private String upload(BufferedImage image, String filename, String contentType) throws FileUploadException {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);

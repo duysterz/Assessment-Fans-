@@ -2,8 +2,11 @@ package learn.fan_site.domain;
 
 import learn.fan_site.data.FileRepository;
 import learn.fan_site.exceptions.FileUploadException;
+import learn.fan_site.models.ImageData;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 public class FileService {
@@ -23,6 +26,9 @@ public class FileService {
             result.addMessage("File not uploaded.", ResultType.INVALID);
         }
         return result;
+    }
+    public List<ImageData> fetchAllImages() {
+        return fileRepository.fetchAllImages();
     }
 }
 
