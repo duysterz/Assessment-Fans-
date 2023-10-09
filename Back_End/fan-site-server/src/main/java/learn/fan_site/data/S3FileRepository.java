@@ -105,7 +105,7 @@ public class S3FileRepository implements FileRepository {
                 ImageData imageData = new ImageData();
                 imageData.setId(filename);  // ID can be filename or some unique identifier
                 imageData.setUrl(url.toString());
-                imageData.setDescription(description);
+//                imageData.setDescription(description);
 
                 imageList.add(imageData);
             }
@@ -122,7 +122,7 @@ public class S3FileRepository implements FileRepository {
         return "Description for " + filename;
     }
 
-    
+
 
     private String upload(BufferedImage image, String filename, String contentType) throws FileUploadException {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);

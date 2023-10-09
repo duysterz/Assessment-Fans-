@@ -5,7 +5,7 @@ import '../App.css';
 const Header = () => {
   return (
     <header className="header">
-      <h1>SofaSoGood 🛋️ Designs </h1>
+      <h1>💡 Divine Flip 🛋️ Designs 🏘️</h1>
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li> 

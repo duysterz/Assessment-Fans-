@@ -1,12 +1,12 @@
 package learn.fan_site.models;
 
 public class ImageData {
-    private int id;
+    private String id;
     private String url;
     private String description;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getUrl() { return url; }
     public void setUrl(String url) { this.url = url; }
     public String getDescription() { return description; }
