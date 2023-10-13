@@ -28,7 +28,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/upload" element={<Upload />} />
+            <Route path="/upload" element={user ? <Upload /> : null} />
             <Route path="/login" element={<Login auth={{ user, login, logout }} />} />
           </Routes>
         </main>
