@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
-const Header = () => {
-  const [user, setUser] = useState(null);
+const Header = (props) => {
+  const { user, logout } = props.auth;
 
   const handleLogout = () => {
-    setUser(null);  // Reset user -> null on logout
-    // more logout logic?
+    logout();  // Call the logout function passed via props
   };
 
   return (
