@@ -6,6 +6,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Upload from './components/Upload';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/upload" element={<Upload />} />
+            <Route path="/login" element={<Login/>} />
           </Routes>
         </main>
         {/* <Footer /> */}
