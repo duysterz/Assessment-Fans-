@@ -4,8 +4,8 @@ import learn.fan_site.data.RoomRepository;
 import learn.fan_site.models.Room;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.List;
 
 
