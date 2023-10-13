@@ -7,6 +7,8 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Upload from './components/Upload';
 import Login from './components/Login';
+import { AuthProvider } from './components/AuthContext';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -20,6 +22,7 @@ function App() {
   };
 
   return (
+    <AuthProvider>
     <Router>
     <div className="App">
       <Header auth={{ user, login, logout }} />  
@@ -35,6 +38,7 @@ function App() {
         {/* <Footer /> */}
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 

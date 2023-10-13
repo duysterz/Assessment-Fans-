@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import { useAuth } from './AuthContext';
 
 const Header = (props) => {
-  const { user, logout } = props.auth;
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
-    logout();  // Call the logout function passed via props
+    logout();  // // Call the logout function from useAuth instead of passed via props?
   };
 
   return (

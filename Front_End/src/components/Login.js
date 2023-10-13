@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useAuth } from './AuthContext';
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ const Login = (props) => {
     if (data.token) {
         // Stroring JWT token then -> home
         localStorage.setItem('token', data.token);
-        props.auth.login({ username: username });
+        login({ username: username }); //useAuth() log in
         window.location.href = '/';
       } else {
         alert('Authentication failed');
